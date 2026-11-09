@@ -168,6 +168,37 @@
   .proj .stack { margin-top: 14px; font-size: 13px; color: var(--sea); font-weight: 500; }
   .edu-line { margin: 18px 0 0 28px; font-size: 14px; color: var(--muted); }
   @media (max-width: 860px) { .caps { grid-template-columns: 1fr; } }
+  .news { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px 26px; box-shadow: var(--shadow); }
+  .news h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 600; }
+  .news ul { list-style: none; margin: 0; padding: 0; }
+  .news li { display: grid; grid-template-columns: 74px 1fr; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line); font-size: 15px; }
+  .news li:first-child { border-top: 0; }
+  .news li span { font-family: "Fraunces", serif; font-weight: 600; color: var(--sea); }
+  .plinks { margin-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .plinks a { font-size: 12.5px; font-weight: 600; border: 1px solid var(--line); border-radius: 6px; padding: 2px 9px; color: var(--accent); }
+  .plinks a:hover { border-color: var(--accent); text-decoration: none; }
+  .case { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 30px 32px; box-shadow: var(--shadow); }
+  .case-head h3 { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(22px, 3vw, 28px); line-height: 1.25; margin: 12px 0 18px; }
+  .story { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .step b { display: block; font-size: 12.5px; text-transform: uppercase; letter-spacing: .12em; color: var(--sea); margin-bottom: 6px; }
+  .step p { margin: 0; color: var(--muted); }
+  figure.wide { margin: 26px 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  figure.wide img { width: 100%; height: auto; display: block; max-height: 520px; object-fit: contain; }
+  figure.wide figcaption { font-size: 13px; color: #5d6874; margin-top: 10px; }
+  .grid.three { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 860px) { .story, .grid.three { grid-template-columns: 1fr; } .case { padding: 22px 18px; } }
+  .intro { max-width: 760px; margin: -8px 0 24px; color: var(--muted); font-size: 16.5px; }
+  .caps.four { grid-template-columns: repeat(2, 1fr); }
+  .cap ul { margin: 6px 0 0; padding-left: 18px; color: var(--muted); font-size: 15px; }
+  .cap li { margin: 3px 0; }
+  .cap li::marker { color: var(--sea); }
+  .ml { margin-top: 22px; padding: 16px 20px; border-radius: 14px; border: 1px dashed color-mix(in srgb, var(--sea) 55%, var(--line)); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+  .ml b { font-family: "Fraunces", serif; font-size: 17px; }
+  .ml span { color: var(--muted); font-size: 15px; }
+  .ml-card { grid-column: 1 / -1; }
+  .ml-card ul { columns: 2; column-gap: 36px; }
+  .ml-card li { break-inside: avoid; }
+  @media (max-width: 860px) { .ml-card ul { columns: 1; } }
   /* publications */
   .pubs { display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
   .pub { display: grid; grid-template-columns: 76px 1fr; gap: 18px; padding: 18px 24px; border-top: 1px solid var(--line); }
@@ -242,14 +273,12 @@
       <ul>
         <li><a href="#skills">What I do</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#publications">Publications</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
 
     <div class="hero-inner">
-      <p class="eyebrow">Control engineering &middot; Machine learning &middot; Power &amp; energy</p>
+      <p class="eyebrow">Power systems &middot; Converter control &middot; Machine learning</p>
       <h1>Jianing Fu</h1>
       <p class="lede">I design, simulate and validate controllers for power and energy systems, and use reinforcement learning where classical tuning runs out. Four years of UK R&amp;D across converter control, wind turbine control and Python&ndash;Simulink tooling.</p>
       <div class="open"><i></i>Open to engineering roles &middot; full UK right to work</div>
@@ -280,113 +309,109 @@
 
   <!-- stats strip -->
   <div class="stats">
-    <div class="stat"><b>4+ yrs</b><span>UK R&amp;D in control and machine learning</span></div>
+    <div class="stat"><b>4+ yrs</b><span>UK R&amp;D in power-system and converter control</span></div>
     <div class="stat"><b>5</b><span>peer-reviewed journal papers</span></div>
-    <div class="stat"><b>IEEE</b><span>journal reviewer (Trans. Automation Science &amp; Engineering)</span></div>
+    <div class="stat"><b>IEEE</b><span>journal reviewer: Trans. Automation Science &amp; Engineering, IEEE Access</span></div>
     <div class="stat"><b>UK</b><span>full right to work, no sponsorship needed</span></div>
   </div>
 
   <!-- ================= WHAT I DO ================= -->
   <section id="skills" class="reveal">
     <div class="sec-head"><span class="num">01</span><h2>What I do</h2></div>
-    <div class="caps">
+    <p class="intro">I am an electrical engineer by training (BEng Electrical Engineering, PhD Renewable Energy). My core is the control of power-electronic and electromechanical systems that connect renewable generation to the grid, and the machine learning methods that make that control adaptive and safe.</p>
+    <div class="caps four">
       <div class="cap">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-        <h3>Control system design</h3>
-        <p>Grid-forming (virtual synchronous machine) and grid-following (PLL) converter control, frequency response and current limiting. Wind turbine pitch and torque control, individual pitch control, active structural control and fault-tolerant control.</p>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 15c1.5-6 3.5-6 5 0s3.5 6 5 0"/></svg></div>
+        <h3>Power electronic converter control</h3>
+        <ul><li>Grid-forming control (virtual synchronous machine, droop)</li><li>Grid-following control with phase-locked loops</li><li>Current limiting, transient virtual impedance, anti-windup</li><li>DC-link voltage and converter current limits</li></ul>
       </div>
       <div class="cap">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
-        <h3>Machine learning &amp; RL engineering</h3>
-        <p>Reinforcement learning in PyTorch (SAC, PPO, distributional and meta-RL, multi-agent RL) with safety shields and watchdogs. Physics-informed neural networks. From reward design to closed-loop deployment in simulation.</p>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 7 22M12 2l5 20M8.5 9h7M7.3 15h9.4"/><path d="M2 9h4M18 9h4"/></svg></div>
+        <h3>Power system dynamics &amp; grid integration</h3>
+        <ul><li>Frequency response and inertial support from wind farms</li><li>Small- and large-signal stability of converter-dominated grids</li><li>Grid strength (short-circuit ratio) effects on control</li><li>Wind farm models from one turbine to nine turbines</li></ul>
       </div>
       <div class="cap">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15c2-6 4-9 6-9s3 4 4 6 2 3 3 3"/></svg></div>
-        <h3>Modelling, simulation &amp; validation</h3>
-        <p>MATLAB/Simulink, Simscape Electrical (EMT), OpenFAST and TurbSim. Python&ndash;Simulink co-simulation with parallel MATLAB Engine pools, model validation and Monte-Carlo studies.</p>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4v5M12 15v5M4 12h5M15 12h5"/></svg></div>
+        <h3>Electrical machines &amp; drives</h3>
+        <ul><li>Permanent-magnet synchronous generator (PMSG) wind turbines</li><li>Doubly-fed induction generator (DFIG) control</li><li>Nonlinear sliding-mode control of DFIG hydro units (published, <em>Energy</em>)</li><li>Pitch, torque and speed control of the generator&ndash;rotor system</li></ul>
       </div>
+      <div class="cap">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 2 5-6"/><circle cx="18" cy="7" r="1.5"/></svg></div>
+        <h3>EMT modelling &amp; validation</h3>
+        <ul><li>Average-value electromagnetic transient (EMT) models in Simscape Electrical</li><li>Reduced-order models checked against EMT simulation</li><li>Monte-Carlo studies under turbulent wind</li><li>Python&ndash;Simulink co-simulation for automated test campaigns</li></ul>
+      </div>
+    <div class="cap ml-card">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6.5 10.3 11M7 17.5l3.3-4.5M13.7 11 17 6.5M13.7 13l3.3 4.5"/></svg></div>
+      <h3>Machine learning for control</h3>
+      <ul>
+        <li>Deep reinforcement learning: SAC, PPO, distributional SAC, meta-RL (PEARL), multi-agent SAC</li>
+        <li>Safe learning: safety shields and watchdogs, learning-based control barrier functions</li>
+        <li>Physics-informed neural networks that solve optimal-control (HJB) problems</li>
+        <li>Neural-network surrogate models of plant dynamics</li>
+        <li>Simulink and OpenFAST simulators wrapped as Gymnasium-style environments, with parallel training</li>
+        <li>Benchmarking learned controllers against classical and fixed-gain baselines</li>
+      </ul>
     </div>
-    <div class="chips" style="margin-top:22px">
-      <span>Python</span><span>PyTorch</span><span>NumPy &middot; Pandas</span><span>MATLAB</span><span>Simulink</span><span>Simscape Electrical</span><span>OpenFAST</span><span>Git</span><span>LaTeX</span>
+    </div>
+    <div class="chips" style="margin-top:18px">
+      <span>MATLAB</span><span>Simulink</span><span>Simscape Electrical</span><span>OpenFAST</span><span>Python</span><span>PyTorch</span><span>NumPy &middot; Pandas</span><span>Git</span>
     </div>
   </section>
 
-  <!-- ================= PROJECTS ================= -->
+  <!-- ================= CASE STUDY ================= -->
   <section id="projects" class="reveal">
-    <div class="sec-head"><span class="num">02</span><h2>Selected projects</h2></div>
-
-    <div class="grid">
-      <article class="proj">
-        <span class="when">2026 &ndash; now</span>
-        <span class="tag on">Current</span>
-        <h3>Adaptive control of grid-forming and grid-following wind-turbine converters</h3>
-        <p>As converters replace synchronous generators, grid frequency gets harder to hold. I built grid-forming and grid-following converter testbeds in Simulink and Simscape Electrical, from a single 5&nbsp;MW turbine up to a nine-turbine wind farm, and I am developing learning-based safety control (control barrier functions) that adapts the converter settings online for stronger frequency resilience.</p>
-        <p class="stack">MATLAB/Simulink &middot; Simscape Electrical &middot; Python</p>
-      </article>
-      <article class="proj">
-        <span class="when">2026 &ndash; now</span>
-        <span class="tag on">Current</span>
-        <h3>Rotor-safe frequency support from grid-forming wind turbines</h3>
-        <p>A supervisory safety layer that lets a grid-forming wind turbine give extra frequency support to the grid while keeping its rotor speed within safe limits.</p>
-        <p class="stack">MATLAB/Simulink &middot; Python</p>
-      </article>
-      <article class="proj">
-        <span class="when">2022 &ndash; 2026</span>
-        <span class="tag rev">2 papers under review</span>
-        <h3>Learning-based control for floating offshore wind turbines</h3>
-        <p>Reinforcement-learning controllers that damp platform motion and keep pitch control working through actuator and sensor faults, trained and tested on OpenFAST and Simulink co-simulation.</p>
-        <p class="stack">Python &middot; PyTorch &middot; OpenFAST &middot; Simulink S-Functions</p>
-      </article>
-      <article class="proj">
-        <span class="when">2023 &ndash; 2026</span>
-        <span class="tag pub">Published &middot; Ocean Engineering</span>
-        <h3>Neural-network optimal control of an active tuned mass damper</h3>
-        <p>A physics-informed neural network solves the optimal-control (Hamilton&ndash;Jacobi&ndash;Bellman) equation and drives an active tuned mass damper that reduces structural loads on a floating wind turbine. Started with the University of Warwick.</p>
-        <p class="stack">Python &middot; PyTorch &middot; OpenFAST &middot; MATLAB/Simulink</p>
-      </article>
-    </div>
+    <div class="sec-head"><span class="num">02</span><h2>Case study</h2></div>
+    <article class="case">
+      <div class="case-head">
+        <span class="tag pub">Published &middot; Ocean Engineering 2026</span>
+        <h3>Teaching a neural network to hold a floating wind turbine steady</h3>
+      </div>
+      <div class="story">
+        <div class="step"><b>The problem</b><p>A floating wind turbine is pushed around by wind and waves at the same time, and its platform keeps pitching back and forth. That motion wears out the structure. An active tuned mass damper, a heavy mass moved by an actuator inside the platform, can push back, but the coupled turbine&ndash;platform&ndash;damper dynamics are nonlinear and high-dimensional, so the usual controller design does not fit.</p></div>
+        <div class="step"><b>The idea</b><p>Learn the dynamics instead of deriving them. A neural network surrogate is trained on simulation data to stand in for the physics. Then a physics-informed neural network solves the optimal-control (Hamilton&ndash;Jacobi&ndash;Bellman) equation on that surrogate, without a mesh-based solver and without per-step iterations.</p></div>
+      </div>
+      <figure class="wide">
+        <img src="assets/pinn-scheme.png" alt="Control scheme: one network learns the value function, another learns the dynamics; automatic differentiation of the value function gives the optimal damper force applied to the floating turbine." loading="lazy">
+        <figcaption>The controller: one network learns the value function, another the dynamics; automatic differentiation turns them into the damper force.</figcaption>
+      </figure>
+      <div class="story">
+        <div class="step"><b>What I built</b><p>The surrogate model, the PINN solver and the closed loop around a high-fidelity OpenFAST model of a 5&nbsp;MW floating turbine, then tests against passive damping, an H&#8734; controller and adaptive dynamic programming in two normal and two extreme sea states.</p></div>
+        <div class="step"><b>What it showed</b><p>The PINN controller substantially reduced platform pitch motion while using less power than the benchmark controllers (figure below: further up and to the left is better).</p></div>
+      </div>
+      <figure class="wide">
+        <img src="assets/pinn-power-vs-reduction.png" alt="Scatter plots for four sea states (E1, E2, N1, N2): damper power in kW against reduction in platform motion in percent, for passive, H-infinity, two ADP and three PINN controllers." loading="lazy">
+        <figcaption>Damper power against reduction in platform motion, four sea states. Red markers are the PINN controllers. From Fu et al., <a href="https://doi.org/10.1016/j.oceaneng.2025.123914" target="_blank" rel="noopener"><em>Ocean Engineering</em> (2026)</a>.</figcaption>
+      </figure>
+      <p class="stack" style="margin-top:4px">Python &middot; PyTorch &middot; OpenFAST &middot; MATLAB/Simulink &middot; with Prof Xiaowei Zhao's group, University of Warwick</p>
+    </article>
   </section>
 
-  <!-- ================= EXPERIENCE ================= -->
-  <section id="experience" class="reveal">
-    <div class="sec-head"><span class="num">03</span><h2>Experience</h2></div>
-    <div class="tl">
-      <div class="item now"><div class="when">Jun 2026 &ndash; present</div><div><h4>Postdoctoral Research Associate</h4><p>University of Exeter &middot; Adaptive control of offshore wind farms, with the University of Warwick</p></div></div>
-      <div class="item now"><div class="when">2025 &ndash; present</div><div><h4>Postgraduate Teaching Assistant</h4><p>University of Exeter &middot; LTHE Stage 2 (AdvanceHE accredited)</p></div></div>
-      <div class="item"><div class="when">Sep 2022 &ndash; 2026</div><div><h4>Doctoral Researcher, PhD Renewable Energy</h4><p>University of Hull (2022&ndash;2025), then University of Exeter (2025&ndash;) &middot; thesis submitted</p></div></div>
-      <div class="item" style="padding-bottom:0"><div class="when">Mar &ndash; Dec 2023</div><div><h4>Visiting Researcher</h4><p>University of Warwick</p></div></div>
+  <!-- ================= OTHER WORK ================= -->
+  <section class="reveal">
+    <div class="sec-head"><span class="num">03</span><h2>Current and recent work</h2></div>
+    <div class="grid three">
+      <article class="proj">
+        <span class="tag on">Current</span>
+        <h3>Adaptive control of grid-forming and grid-following converters</h3>
+        <p>Converter testbeds from one 5&nbsp;MW turbine to a nine-turbine wind farm, and learning-based safety control that adapts the converters online.</p>
+      </article>
+      <article class="proj">
+        <span class="tag on">Current</span>
+        <h3>Rotor-safe frequency support</h3>
+        <p>A supervisory layer that lets a grid-forming wind turbine help the grid frequency while keeping its rotor speed safe.</p>
+      </article>
+      <article class="proj">
+        <span class="tag rev">Under review</span>
+        <h3>Learning-based control of floating wind turbines</h3>
+        <p>Reinforcement-learning controllers for platform motion and for pitch control that keeps working through actuator and sensor faults.</p>
+      </article>
     </div>
-    <p class="edu-line">Earlier: MSc and BEng in hydropower and electrical engineering.</p>
-  </section>
-
-  <!-- ================= PUBLICATIONS ================= -->
-  <section id="publications" class="reveal">
-    <div class="sec-head"><span class="num">04</span><h2>Selected publications</h2></div>
-    <div class="pubs">
-      <div class="pub"><div class="yr">2026</div><div>
-        <div class="t">Load mitigation in floating wind turbines via active tuned mass damper using a physics-informed neural network based controller</div>
-        <div class="a"><b>J. Fu</b>, S. Lin, H. Dong, X. Zhao</div>
-        <div class="v"><em>Ocean Engineering</em>, vol. 351, art. 123914</div></div></div>
-      <div class="pub"><div class="yr">2022</div><div>
-        <div class="t">Nonsingular fast terminal control for the DFIG-based variable-speed hydro-unit</div>
-        <div class="a"><b>J. Fu</b>, X. Yu, C. Gao, J. Cui, Y. Li</div>
-        <div class="v"><em>Energy</em>, vol. 244, art. 122672</div></div></div>
-      <div class="pub"><div class="yr"><span class="tag rev">Review</span></div><div>
-        <div class="t">Risk-sensitive distributional reinforcement learning for coordinated pitch&ndash;torque control of floating offshore wind turbines</div>
-        <div class="a"><b>J. Fu</b>, S. Lin, et al.</div>
-        <div class="v"><em>Expert Systems With Applications</em>, revision submitted</div></div></div>
-      <div class="pub"><div class="yr"><span class="tag rev">Review</span></div><div>
-        <div class="t">Meta-reinforcement learning for fault-tolerant individual pitch control of wind turbines</div>
-        <div class="a"><b>J. Fu</b>, S. Lin, et al.</div>
-        <div class="v">Submitted to <em>Engineering Applications of Artificial Intelligence</em></div></div></div>
-    </div>
-    <p class="pubs-foot">Plus three co-authored journal papers. Full list on <a href="https://scholar.google.com/citations?hl=en&amp;user=SM7ECTsAAAAJ" target="_blank" rel="noopener">Google Scholar</a>.</p>
   </section>
 
   <!-- ================= CONTACT ================= -->
   <div class="contact reveal" id="contact">
     <h2>Let's talk</h2>
-    <p>I'm looking for engineering roles in control, power systems and applied machine learning. Based in Cornwall, UK, with full UK right to work. CV available on request.</p>
+    <p>I'm looking for engineering roles in control, power systems and applied machine learning. Based in Cornwall, UK, with full UK right to work. My CV and full publication list are available on request or on Google Scholar.</p>
     <div class="btns">
       <a class="btn primary" href="mailto:jianing.fu.1995@gmail.com">jianing.fu.1995@gmail.com</a>
       <a class="btn ghost" href="https://scholar.google.com/citations?hl=en&amp;user=SM7ECTsAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
@@ -421,6 +446,7 @@
       els.forEach(function (el) { io.observe(el); });
     } else { els.forEach(function (el) { el.classList.add('in'); }); }
   })();
+
 </script>
 </body>
 </html>
