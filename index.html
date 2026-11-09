@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jianing Fu</title>
+<meta name="description" content="Jianing Fu, control and machine learning engineer for power and energy systems. Converter and wind turbine control, reinforcement learning, Simulink and Python.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f4ef;
+    --surface: #ffffff;
+    --text: #17202a;
+    --muted: #5d6874;
+    --line: #e2ded5;
+    --navy: #0e2a47;
+    --navy-2: #163b61;
+    --accent: #1f6fb2;
+    --sea: #2b8a9e;
+    --gold: #e0a43a;
+    --chip: #ece8df;
+    --shadow: 0 1px 2px rgba(14,42,71,.06), 0 8px 24px rgba(14,42,71,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d141c; --surface: #141e29; --text: #e7ecf1; --muted: #9eabb8;
+      --line: #23303d; --accent: #6db3ee; --sea: #5cc0d2; --chip: #1c2834;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d141c; --surface: #141e29; --text: #e7ecf1; --muted: #9eabb8;
+    --line: #23303d; --accent: #6db3ee; --sea: #5cc0d2; --chip: #1c2834;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16.5px/1.7 "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  .serif { font-family: "Fraunces", Georgia, serif; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative; overflow: hidden; color: #fff;
+    background:
+      radial-gradient(1200px 500px at 80% -10%, rgba(224,164,58,.22), transparent 60%),
+      linear-gradient(180deg, #0b2440 0%, #123a63 62%, #1b5a7e 100%);
+  }
+  .topbar { display: flex; align-items: center; justify-content: space-between; height: 64px; position: relative; z-index: 3; }
+  .topbar .brand { color: #fff; font-family: "Fraunces", serif; font-weight: 600; font-size: 19px; letter-spacing: .2px; }
+  .topbar ul { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; }
+  .topbar ul a { color: rgba(255,255,255,.78); font-size: 14.5px; font-weight: 500; }
+  .topbar ul a:hover { color: #fff; text-decoration: none; }
+
+  .hero-inner { position: relative; z-index: 2; padding: 72px 0 190px; max-width: 680px; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: 12.5px; font-weight: 600; color: var(--gold); margin: 0 0 14px; }
+  .hero h1 { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(42px, 7vw, 68px); line-height: 1.04; margin: 0 0 18px; letter-spacing: -.5px; }
+  .hero .lede { font-size: 19px; line-height: 1.6; color: rgba(255,255,255,.86); margin: 0 0 28px; }
+  .open {
+    display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22);
+    padding: 7px 14px; border-radius: 999px; margin-bottom: 28px; backdrop-filter: blur(4px);
+  }
+  .open i { width: 8px; height: 8px; border-radius: 50%; background: #4fd18b; box-shadow: 0 0 0 4px rgba(79,209,139,.22); }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 10px;
+    font-size: 14.5px; font-weight: 600; transition: transform .15s ease, background .15s ease;
+  }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); }
+  .btn.primary { background: #fff; color: var(--navy); }
+  .btn.ghost { color: #fff; border: 1px solid rgba(255,255,255,.35); }
+  .btn.ghost:hover { background: rgba(255,255,255,.08); }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* sea + turbines */
+  .scene { position: absolute; left: 0; right: 0; bottom: 0; height: 260px; z-index: 1; pointer-events: none; }
+  .scene svg { width: 100%; height: 100%; display: block; }
+  .w { fill: none; stroke-width: 1.6; stroke-dasharray: 12 10; animation: flow 18s linear infinite; }
+  .w1 { stroke: rgba(224,164,58,.55); }
+  .w2 { stroke: rgba(255,255,255,.28); animation-duration: 26s; }
+  .w3 { stroke: rgba(120,200,220,.35); animation-duration: 22s; animation-direction: reverse; }
+  @keyframes flow { to { stroke-dashoffset: -440; } }
+  @media (prefers-reduced-motion: reduce) { .w { animation: none; } }
+
+  /* ---------- STATS ---------- */
+  .stats {
+    position: relative; z-index: 4; margin-top: -44px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow);
+  }
+  .stat { padding: 20px 22px; border-left: 1px solid var(--line); }
+  .stat:first-child { border-left: 0; }
+  .stat b { display: block; font-family: "Fraunces", serif; font-size: 30px; font-weight: 600; line-height: 1.1; color: var(--text); }
+  .stat span { font-size: 13.5px; color: var(--muted); }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 84px 0 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 30px; }
+  .sec-head .num { font-family: "Fraunces", serif; color: var(--sea); font-size: 15px; font-weight: 600; }
+  .sec-head h2 { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(28px, 4vw, 36px); margin: 0; letter-spacing: -.3px; }
+  .sec-head::after { content: ""; flex: 1; height: 1px; background: var(--line); transform: translateY(-8px); }
+
+  .about { display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; }
+  .about p { margin: 0 0 16px; }
+  .about p:first-child::first-letter { font-family: "Fraunces", serif; float: left; font-size: 58px; line-height: .9; padding: 6px 10px 0 0; color: var(--navy-2); }
+  :root[data-theme="dark"] .about p:first-child::first-letter { color: var(--accent); }
+  .side h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 0 0 12px; font-weight: 600; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+  .chips span { background: var(--chip); border-radius: 8px; padding: 5px 11px; font-size: 13.5px; font-weight: 500; }
+
+  /* featured research */
+  .feature {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 0; overflow: hidden;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); margin-bottom: 22px;
+  }
+  .feature .fig { background: #fff; display: flex; align-items: center; justify-content: center; padding: 22px; border-right: 1px solid var(--line); }
+  .feature .fig img { width: 100%; height: auto; max-height: 320px; object-fit: contain; }
+  .feature .body { padding: 28px 30px; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .04em; padding: 3px 9px; border-radius: 6px; }
+  .tag.pub { background: #e2f3e9; color: #1d6b40; }
+  .tag.rev { background: #fbefd6; color: #8a5b00; }
+  .tag.on  { background: #e2eef9; color: #1b5f9a; }
+  .tag { width: max-content; max-width: 100%; }
+  :root[data-theme="dark"] .tag.pub { background: #16382a; color: #8ad6a8; }
+  :root[data-theme="dark"] .tag.rev { background: #3a2d12; color: #ebc47c; }
+  :root[data-theme="dark"] .tag.on  { background: #17324d; color: #8cc4f2; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .tag.pub { background: #16382a; color: #8ad6a8; }
+    :root:not([data-theme="light"]) .tag.rev { background: #3a2d12; color: #ebc47c; }
+    :root:not([data-theme="light"]) .tag.on  { background: #17324d; color: #8cc4f2; }
+    :root:not([data-theme="light"]) .about p:first-child::first-letter { color: var(--accent); }
+  }
+  .feature h3, .proj h3 { font-family: "Fraunces", serif; font-weight: 600; font-size: 22px; line-height: 1.3; margin: 12px 0 10px; }
+  .feature p, .proj p { margin: 0; color: var(--muted); }
+  .feature .venue { margin-top: 14px; font-size: 14px; }
+  .caption { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .proj {
+    position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 26px 26px 24px;
+    box-shadow: var(--shadow); transition: transform .2s ease, border-color .2s ease;
+  }
+  .proj:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+  .proj .icon {
+    width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--navy-2), var(--sea)); color: #fff; margin-bottom: 14px;
+  }
+  .proj .icon svg { width: 22px; height: 22px; }
+  .proj .when { position: absolute; top: 26px; right: 26px; font-size: 12.5px; color: var(--muted); }
+  .proj h3 { font-size: 19px; margin-top: 8px; }
+
+  .caps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .cap { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); }
+  .cap .icon, .proj .icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(135deg, var(--navy-2), var(--sea)); color: #fff; margin-bottom: 14px; }
+  .cap .icon svg { width: 22px; height: 22px; }
+  .cap h3 { font-family: "Fraunces", serif; font-weight: 600; font-size: 20px; margin: 0 0 8px; }
+  .cap p { margin: 0; color: var(--muted); font-size: 15px; }
+  .proj .stack { margin-top: 14px; font-size: 13px; color: var(--sea); font-weight: 500; }
+  .edu-line { margin: 18px 0 0 28px; font-size: 14px; color: var(--muted); }
+  @media (max-width: 860px) { .caps { grid-template-columns: 1fr; } }
+  /* publications */
+  .pubs { display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+  .pub { display: grid; grid-template-columns: 76px 1fr; gap: 18px; padding: 18px 24px; border-top: 1px solid var(--line); }
+  .pub:first-child { border-top: 0; }
+  .pub .yr { font-family: "Fraunces", serif; font-weight: 600; font-size: 20px; color: var(--sea); line-height: 1.3; }
+  .pub .t { font-weight: 600; line-height: 1.45; }
+  .pub .a { font-size: 14.5px; color: var(--muted); margin-top: 2px; }
+  .pub .a b { color: var(--text); font-weight: 600; }
+  .pub .v { font-size: 14.5px; margin-top: 2px; }
+  .pub .v em { color: var(--text); }
+  .pubs-foot { font-size: 14px; color: var(--muted); margin-top: 14px; }
+
+  /* timeline */
+  .tl { position: relative; padding-left: 28px; }
+  .tl::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+  .item { position: relative; display: grid; grid-template-columns: 170px 1fr; gap: 20px; padding: 0 0 26px; }
+  .item::before {
+    content: ""; position: absolute; left: -28px; top: 7px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--bg); border: 3px solid var(--sea);
+  }
+  .item.now::before { background: var(--sea); box-shadow: 0 0 0 5px color-mix(in srgb, var(--sea) 22%, transparent); }
+  .item .when { font-size: 14px; color: var(--muted); padding-top: 1px; font-variant-numeric: tabular-nums; }
+  .item h4 { margin: 0; font-size: 16.5px; font-weight: 600; }
+  .item p { margin: 2px 0 0; color: var(--muted); font-size: 14.5px; }
+
+  /* contact */
+  .contact {
+    margin: 84px 0 0; border-radius: 20px; padding: 44px 40px; color: #fff; position: relative; overflow: hidden;
+    background: linear-gradient(120deg, #0e2a47, #1b5a7e);
+  }
+  .contact h2 { font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(26px, 4vw, 34px); margin: 0 0 10px; }
+  .contact p { margin: 0 0 22px; color: rgba(255,255,255,.82); max-width: 560px; }
+  .contact .btn.primary { color: var(--navy); }
+
+  footer { padding: 34px 0 44px; color: var(--muted); font-size: 13px; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .theme-btn { background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 8px; padding: 5px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+  /* responsive */
+  @media (max-width: 860px) {
+    .about, .feature { grid-template-columns: 1fr; }
+    .feature .fig { border-right: 0; border-bottom: 1px solid var(--line); }
+    .grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(3) { border-left: 0; }
+    .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 600px) {
+    .topbar ul { display: none; }
+    .hero-inner { padding: 40px 0 150px; }
+    .scene { height: 190px; }
+    .item { grid-template-columns: 1fr; gap: 2px; }
+    .pub { grid-template-columns: 1fr; gap: 4px; padding: 16px 18px; }
+    .contact { padding: 32px 22px; }
+    section { padding-top: 64px; }
+    .proj .when { position: static; display: block; margin-top: -6px; margin-bottom: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="#top">Jianing Fu</a>
+      <ul>
+        <li><a href="#skills">What I do</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="hero-inner">
+      <p class="eyebrow">Control engineering &middot; Machine learning &middot; Power &amp; energy</p>
+      <h1>Jianing Fu</h1>
+      <p class="lede">I design, simulate and validate controllers for power and energy systems, and use reinforcement learning where classical tuning runs out. Four years of UK R&amp;D across converter control, wind turbine control and Python&ndash;Simulink tooling.</p>
+      <div class="open"><i></i>Open to engineering roles &middot; full UK right to work</div>
+      <div class="btns">
+        <a class="btn primary" href="mailto:jianing.fu.1995@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Get in touch</a>
+        <a class="btn ghost" href="https://scholar.google.com/citations?hl=en&amp;user=SM7ECTsAAAAJ" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>Google Scholar</a>
+        <a class="btn ghost" href="https://orcid.org/0009-0008-5877-1306" target="_blank" rel="noopener">ORCID</a>
+        <a class="btn ghost" href="https://github.com/JianingFu-EXE" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg>GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- abstract signal waves -->
+  <div class="scene" aria-hidden="true">
+    <svg viewBox="0 0 1440 260" preserveAspectRatio="none">
+      <path class="w w1" d="M0 150 C 160 90 320 210 480 150 S 800 90 960 150 S 1280 210 1440 150" />
+      <path class="w w2" d="M0 175 C 200 125 360 235 560 175 S 900 115 1100 175 S 1340 225 1440 170" />
+      <path class="w w3" d="M0 200 C 240 160 420 250 660 200 S 1020 150 1240 200 S 1400 230 1440 196" />
+      <path d="M0 230 C 240 215 480 245 720 230 S 1200 215 1440 230 L1440 260 L0 260 Z" fill="var(--bg)"/>
+    </svg>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- stats strip -->
+  <div class="stats">
+    <div class="stat"><b>4+ yrs</b><span>UK R&amp;D in control and machine learning</span></div>
+    <div class="stat"><b>5</b><span>peer-reviewed journal papers</span></div>
+    <div class="stat"><b>IEEE</b><span>journal reviewer (Trans. Automation Science &amp; Engineering)</span></div>
+    <div class="stat"><b>UK</b><span>full right to work, no sponsorship needed</span></div>
+  </div>
+
+  <!-- ================= WHAT I DO ================= -->
+  <section id="skills" class="reveal">
+    <div class="sec-head"><span class="num">01</span><h2>What I do</h2></div>
+    <div class="caps">
+      <div class="cap">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>Control system design</h3>
+        <p>Grid-forming (virtual synchronous machine) and grid-following (PLL) converter control, frequency response and current limiting. Wind turbine pitch and torque control, individual pitch control, active structural control and fault-tolerant control.</p>
+      </div>
+      <div class="cap">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
+        <h3>Machine learning &amp; RL engineering</h3>
+        <p>Reinforcement learning in PyTorch (SAC, PPO, distributional and meta-RL, multi-agent RL) with safety shields and watchdogs. Physics-informed neural networks. From reward design to closed-loop deployment in simulation.</p>
+      </div>
+      <div class="cap">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15c2-6 4-9 6-9s3 4 4 6 2 3 3 3"/></svg></div>
+        <h3>Modelling, simulation &amp; validation</h3>
+        <p>MATLAB/Simulink, Simscape Electrical (EMT), OpenFAST and TurbSim. Python&ndash;Simulink co-simulation with parallel MATLAB Engine pools, model validation and Monte-Carlo studies.</p>
+      </div>
+    </div>
+    <div class="chips" style="margin-top:22px">
+      <span>Python</span><span>PyTorch</span><span>NumPy &middot; Pandas</span><span>MATLAB</span><span>Simulink</span><span>Simscape Electrical</span><span>OpenFAST</span><span>Git</span><span>LaTeX</span>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section id="projects" class="reveal">
+    <div class="sec-head"><span class="num">02</span><h2>Selected projects</h2></div>
+
+    <div class="grid">
+      <article class="proj">
+        <span class="when">2026 &ndash; now</span>
+        <span class="tag on">Current</span>
+        <h3>Adaptive control of grid-forming and grid-following wind-turbine converters</h3>
+        <p>As converters replace synchronous generators, grid frequency gets harder to hold. I built grid-forming and grid-following converter testbeds in Simulink and Simscape Electrical, from a single 5&nbsp;MW turbine up to a nine-turbine wind farm, and I am developing learning-based safety control (control barrier functions) that adapts the converter settings online for stronger frequency resilience.</p>
+        <p class="stack">MATLAB/Simulink &middot; Simscape Electrical &middot; Python</p>
+      </article>
+      <article class="proj">
+        <span class="when">2026 &ndash; now</span>
+        <span class="tag on">Current</span>
+        <h3>Rotor-safe frequency support from grid-forming wind turbines</h3>
+        <p>A supervisory safety layer that lets a grid-forming wind turbine give extra frequency support to the grid while keeping its rotor speed within safe limits.</p>
+        <p class="stack">MATLAB/Simulink &middot; Python</p>
+      </article>
+      <article class="proj">
+        <span class="when">2022 &ndash; 2026</span>
+        <span class="tag rev">2 papers under review</span>
+        <h3>Learning-based control for floating offshore wind turbines</h3>
+        <p>Reinforcement-learning controllers that damp platform motion and keep pitch control working through actuator and sensor faults, trained and tested on OpenFAST and Simulink co-simulation.</p>
+        <p class="stack">Python &middot; PyTorch &middot; OpenFAST &middot; Simulink S-Functions</p>
+      </article>
+      <article class="proj">
+        <span class="when">2023 &ndash; 2026</span>
+        <span class="tag pub">Published &middot; Ocean Engineering</span>
+        <h3>Neural-network optimal control of an active tuned mass damper</h3>
+        <p>A physics-informed neural network solves the optimal-control (Hamilton&ndash;Jacobi&ndash;Bellman) equation and drives an active tuned mass damper that reduces structural loads on a floating wind turbine. Started with the University of Warwick.</p>
+        <p class="stack">Python &middot; PyTorch &middot; OpenFAST &middot; MATLAB/Simulink</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section id="experience" class="reveal">
+    <div class="sec-head"><span class="num">03</span><h2>Experience</h2></div>
+    <div class="tl">
+      <div class="item now"><div class="when">Jun 2026 &ndash; present</div><div><h4>Postdoctoral Research Associate</h4><p>University of Exeter &middot; Adaptive control of offshore wind farms, with the University of Warwick</p></div></div>
+      <div class="item now"><div class="when">2025 &ndash; present</div><div><h4>Postgraduate Teaching Assistant</h4><p>University of Exeter &middot; LTHE Stage 2 (AdvanceHE accredited)</p></div></div>
+      <div class="item"><div class="when">Sep 2022 &ndash; 2026</div><div><h4>Doctoral Researcher, PhD Renewable Energy</h4><p>University of Hull (2022&ndash;2025), then University of Exeter (2025&ndash;) &middot; thesis submitted</p></div></div>
+      <div class="item" style="padding-bottom:0"><div class="when">Mar &ndash; Dec 2023</div><div><h4>Visiting Researcher</h4><p>University of Warwick</p></div></div>
+    </div>
+    <p class="edu-line">Earlier: MSc and BEng in hydropower and electrical engineering.</p>
+  </section>
+
+  <!-- ================= PUBLICATIONS ================= -->
+  <section id="publications" class="reveal">
+    <div class="sec-head"><span class="num">04</span><h2>Selected publications</h2></div>
+    <div class="pubs">
+      <div class="pub"><div class="yr">2026</div><div>
+        <div class="t">Load mitigation in floating wind turbines via active tuned mass damper using a physics-informed neural network based controller</div>
+        <div class="a"><b>J. Fu</b>, S. Lin, H. Dong, X. Zhao</div>
+        <div class="v"><em>Ocean Engineering</em>, vol. 351, art. 123914</div></div></div>
+      <div class="pub"><div class="yr">2022</div><div>
+        <div class="t">Nonsingular fast terminal control for the DFIG-based variable-speed hydro-unit</div>
+        <div class="a"><b>J. Fu</b>, X. Yu, C. Gao, J. Cui, Y. Li</div>
+        <div class="v"><em>Energy</em>, vol. 244, art. 122672</div></div></div>
+      <div class="pub"><div class="yr"><span class="tag rev">Review</span></div><div>
+        <div class="t">Risk-sensitive distributional reinforcement learning for coordinated pitch&ndash;torque control of floating offshore wind turbines</div>
+        <div class="a"><b>J. Fu</b>, S. Lin, et al.</div>
+        <div class="v"><em>Expert Systems With Applications</em>, revision submitted</div></div></div>
+      <div class="pub"><div class="yr"><span class="tag rev">Review</span></div><div>
+        <div class="t">Meta-reinforcement learning for fault-tolerant individual pitch control of wind turbines</div>
+        <div class="a"><b>J. Fu</b>, S. Lin, et al.</div>
+        <div class="v">Submitted to <em>Engineering Applications of Artificial Intelligence</em></div></div></div>
+    </div>
+    <p class="pubs-foot">Plus three co-authored journal papers. Full list on <a href="https://scholar.google.com/citations?hl=en&amp;user=SM7ECTsAAAAJ" target="_blank" rel="noopener">Google Scholar</a>.</p>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <div class="contact reveal" id="contact">
+    <h2>Let's talk</h2>
+    <p>I'm looking for engineering roles in control, power systems and applied machine learning. Based in Cornwall, UK, with full UK right to work. CV available on request.</p>
+    <div class="btns">
+      <a class="btn primary" href="mailto:jianing.fu.1995@gmail.com">jianing.fu.1995@gmail.com</a>
+      <a class="btn ghost" href="https://scholar.google.com/citations?hl=en&amp;user=SM7ECTsAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Jianing Fu &middot; Last updated November 2026</span>
+    <button class="theme-btn" id="themeBtn" type="button">Light / dark</button>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('themeBtn');
+    try { var s = localStorage.getItem('theme'); if (s) root.setAttribute('data-theme', s); } catch (e) {}
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme') ||
+        (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+    var els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      els.forEach(function (el) { io.observe(el); });
+    } else { els.forEach(function (el) { el.classList.add('in'); }); }
+  })();
+</script>
+</body>
+</html>
